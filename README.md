@@ -114,6 +114,22 @@ The same decoupled design is why new models can be added without rebuilding the 
 
 ## Two-pass ensemble
 
+WhisperJAV1.10.0双通道可以使用以下几种：
+第一种：
+Pass1：Purfview Faster-Whisper XXL large-v2 int8_float16 开使用后处理
+Pass2：Qwen3‑ASR Aggressive Semantic TEN VAD 开htdemucs（Demucs v4）人声分离和wav2vec2-ja
+第二种：
+Pass1：WhisperJAV Fidelity Aggressive Semantic（PyTorch large-v2 FP16 + Whisperseg VAD）用默认设置
+Pass2：Purfview Faster-Whisper XXL large-v2 int8_float16 开使用后处理
+Pass3：Qwen3‑ASR Aggressive Semantic TEN VAD 开htdemucs（Demucs v4）人声分离和wav2vec2-ja
+第三种：
+Pass1：WhisperJAV Fidelity Aggressive Semantic（PyTorch large-v2 FP16 + Whisperseg VAD）用默认设置
+Pass2：Qwen3‑ASR Aggressive Semantic TEN VAD 开htdemucs（Demucs v4）人声分离和wav2vec2-ja
+第四种：
+Pass1：Anime‑Whisper Aggressive Semantic Whisperseg VAD开htdemucs（Demucs v4）人声分离和wav2vec2-ja
+Pass2：Qwen3‑ASR Aggressive Semantic TEN VAD 开htdemucs（Demucs v4）人声分离和wav2vec2-ja
+
+
 Different pipelines miss different lines. Ensemble mode runs your file through two pipelines and merges the results.
 
 **The v1.9.5 default pairing:** pass 1 = **Qwen3-ASR** with FireRedVAD, pass 2 = **anime-whisper** with TEN VAD, both on Aggressive — two different recognizers *and* two different VADs, so their blind spots don't overlap. In the GUI, pass 2 runs once you tick it.
